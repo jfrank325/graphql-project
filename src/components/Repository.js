@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Repository = ({ repository }) => (
   <div className="repository-box">
-    <p>
-      <strong>In Repository:</strong>
-      <a href={repository.url}> {repository.name}</a>
-    </p>
+    <h2>Repository: {repository.name}</h2>
     <ul>
       <h3>Pull Requests</h3>
       {repository.pullRequests.edges.map(pullRequest => (
@@ -16,6 +13,7 @@ const Repository = ({ repository }) => (
       ))}
     </ul>
     <ul>
+      <h2>Click on an Issue to see it's details</h2>
       <h3>Open Issues</h3>
       {console.log(repository.issues.edges, 'issue edges look like this')}
       {repository.issues.edges.map(issue =>

@@ -5,14 +5,13 @@ import { Route } from 'react-router-dom';
 
 const Organization = ({ organization }) => {
   return organization ? (
-    <div className="organization-box">
-      <p>
-        <strong>Organization</strong>
-        <a href={organization.url}> {organization.name}</a>
-      </p>
-      <Repository repository={organization.repository} />
-      <Route path="/issue/:id" component={Issue} />;
-    </div>
+    <>
+      <h1>Organization: {organization.name}</h1>
+      <div className="organization-box">
+        <Repository repository={organization.repository} />
+        <Route path="/issue/:id" component={Issue} />;
+      </div>
+    </>
   ) : (
     <p>Sorry that query is not returning results</p>
   );

@@ -1,5 +1,6 @@
 .App {
-  display: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .organization-box {
@@ -12,4 +13,8 @@
 
 .issue-box {
   width: 50vw;
+}
+
+ul {
+  list-style-type: none;
 }
