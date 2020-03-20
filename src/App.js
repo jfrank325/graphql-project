@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
+import './App.css';
 import axios from 'axios';
 import Organization from '../src/components/Organization';
-import { Route } from 'react-router-dom';
-import Issue from '../src/components/Issue';
 
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
@@ -13,13 +12,6 @@ const axiosGitHubGraphQL = axios.create({
 });
 
 const TITLE = 'Github Searcher';
-
-// const GET_ORGANIZATION = `
-// {
-//   organization(login: "the-road-to-learn-react") {
-//     name url
-//   }
-// }`;
 
 const getIssuesOfRepositoryQuery = (organization, repository) => `
 {
@@ -64,16 +56,10 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
   }
 }`;
 
-const resolveIssuesQuery = queryResult => () => ({
-  organization: queryResult.data.data.organization,
-  errors: queryResult.data.errors,
-});
-
 class App extends Component {
   state = {
     path: 'facebook/create-react-app',
     organization: null,
-    errors: null,
   };
 
   componentDidMount() {
@@ -95,16 +81,15 @@ class App extends Component {
     axiosGitHubGraphQL.post('', { query: getIssuesOfRepositoryQuery(organization, repository) }).then(response =>
       this.setState(() => ({
         organization: response.data.data.organization,
-        error: response.data.errors,
       }))
     );
   };
 
   render() {
-    const { path, organization, errors } = this.state;
+    const { path, organization } = this.state;
 
     return (
-      <div>
+      <div className="App">
         <h1>{TITLE}</h1>
         <form onSubmit={this.onSubmit}>
           <label htmlFor="url">Show open issues for https://github.com/</label>
@@ -113,7 +98,6 @@ class App extends Component {
         </form>
         <hr />
         {organization ? <Organization organization={organization} /> : <p>No information yet ...</p>}
-        <Route path="/issue/:id" component={Issue} />
       </div>
     );
   }

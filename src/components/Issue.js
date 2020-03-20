@@ -19,6 +19,7 @@ const getIssue = id => `
           node{
             bodyText
             createdAt
+            id
           }
         }
       }
@@ -33,7 +34,7 @@ class Issue extends React.Component {
     comments: [],
   };
 
-  componentDidMount() {
+  componentDidUpdate() {
     this.onFetchFromGitHub();
   }
 
@@ -54,12 +55,12 @@ class Issue extends React.Component {
     console.log(state, 'this is the state being rendered');
     console.log(this.state.comments, 'comments');
     return (
-      <div>
-        <h1>{state.title}</h1>
+      <div className="issue-box">
+        <h1>Issue: {state.title}</h1>
         <h3>Comments</h3>
         <ul>
           {state.comments.length > 0 ? (
-            state.comments.map(comment => <li>{comment.node.bodyText}</li>)
+            state.comments.map(comment => <li key={comment.node.id}>{comment.node.bodyText}</li>)
           ) : (
             <p>There are no comments associated with this issue</p>
           )}
