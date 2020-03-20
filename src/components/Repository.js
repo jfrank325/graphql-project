@@ -11,10 +11,11 @@ const Repository = ({ repository }) => (
 
     <ul>
       <h3>Open Issues</h3>
+      {console.log(repository.issues.edges, 'issue edges look like this')}
       {repository.issues.edges.map(issue =>
         issue.node.state === 'OPEN' ? (
           <li key={issue.node.id}>
-            <Link to={`/issue/${issue.node.id}`}>{issue.node.id}</Link>{' '}
+            <Link to={`/issue/${issue.node.id}`}>{issue.node.title}</Link>{' '}
           </li>
         ) : (
           <>

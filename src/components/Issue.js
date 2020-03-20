@@ -18,6 +18,7 @@ const getIssue = id => `
         edges{
           node{
             bodyText
+            createdAt
           }
         }
       }
@@ -28,11 +29,8 @@ const getIssue = id => `
 
 class Issue extends React.Component {
   state = {
-    issue: '',
     title: '',
-    comments: null,
-    updated_at: '',
-    state: '',
+    comments: [],
   };
 
   componentDidMount() {
@@ -45,20 +43,27 @@ class Issue extends React.Component {
       // console.log(response.data, 'this is what your getting')
       this.setState(() => ({
         title: response.data.data.node.title,
-        updated_at: response.data.data.node.updatedAt,
-        comments: response.data.data.node.comments,
-        state: response.data.data.node.state,
+        comments: response.data.data.node.comments.edges,
       }))
     );
     console.log(this.state, 'this state looks like this');
   };
 
   render() {
+    const state = this.state;
+    console.log(state, 'this is the state being rendered');
+    console.log(this.state.comments, 'comments');
     return (
       <div>
-        <p>{this.state.title}</p>
-        <p>{this.state.updated_at}</p>
-        <p>{this.state.state}</p>
+        <h1>{state.title}</h1>
+        <h3>Comments</h3>
+        <ul>
+          {state.comments.length > 0 ? (
+            state.comments.map(comment => <li>{comment.node.bodyText}</li>)
+          ) : (
+            <p>There are no comments associated with this issue</p>
+          )}
+        </ul>
       </div>
     );
   }
