@@ -35,8 +35,8 @@ class IssueCard extends Component {
   render() {
     const { issue } = this.props;
     return (
-      <>
-        <button className="issue-info-button" onClick={this.showInfo}>
+      <div className="issue-box">
+        <button className="red" onClick={this.showInfo}>
           {issue.node.title}
         </button>
         {this.state.info ? (
@@ -85,7 +85,7 @@ class IssueCard extends Component {
         ) : (
           ''
         )}
-      </>
+      </div>
     );
   }
 }

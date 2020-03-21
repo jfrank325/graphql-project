@@ -35,8 +35,8 @@ class PullRequestCard extends Component {
   render() {
     const { pullRequest } = this.props;
     return (
-      <>
-        <button className="pullRequest-info-button" onClick={this.showInfo}>
+      <div className="pull-request-box">
+        <button className="pull-request-button" onClick={this.showInfo}>
           {pullRequest.node.title}
         </button>
         {this.state.info ? (
@@ -84,7 +84,7 @@ class PullRequestCard extends Component {
         ) : (
           ''
         )}
-      </>
+      </div>
     );
   }
 }
