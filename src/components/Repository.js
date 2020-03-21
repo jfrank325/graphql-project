@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import IssueCard from '../components/IssueCard';
 
 const Repository = ({ repository }) => (
   <div className="repository-box">
@@ -19,14 +20,11 @@ const Repository = ({ repository }) => (
       {repository.issues.edges.map(issue =>
         issue.node.state === 'OPEN' ? (
           <li key={issue.node.id}>
-            <Link to={`/issue/${issue.node.id}`}>
+            {/* <Link to={`/issue/${issue.node.id}`}>
               {issue.node.title}
-              {/* <ul>
-                {issue.node.comments.edges.map(comment => (
-                  <li>{comment.node.bodyText}</li>
-                ))}
-              </ul> */}
-            </Link>{' '}
+            </Link>{' '} */}
+            {/* <h3>{issue.node.title}</h3> */}
+            <IssueCard issue={issue}></IssueCard>
           </li>
         ) : (
           ''
@@ -39,7 +37,9 @@ const Repository = ({ repository }) => (
       {repository.issues.edges.map(issue =>
         issue.node.state === 'CLOSED' ? (
           <li key={issue.node.id}>
-            <Link to={`/issue/${issue.node.id}`}>{issue.node.title}</Link>{' '}
+            {/* <Link to={`/issue/${issue.node.id}`}>{issue.node.title}</Link>  */}
+            {/* <h3>{issue.node.title}</h3> */}
+            <IssueCard issue={issue}></IssueCard>
           </li>
         ) : (
           ''
