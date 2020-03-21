@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-class IssueCard extends Component {
+class PullRequestCard extends Component {
   state = {
     info: false,
     text: '',
-    comments: this.props.issue.node.comments.edges,
+    comments: this.props.pullRequest.node.comments.edges,
   };
 
   showInfo = () => {
@@ -33,18 +33,17 @@ class IssueCard extends Component {
   };
 
   render() {
-    const { issue } = this.props;
+    const { pullRequest } = this.props;
     return (
       <>
-        <button className="issue-info-button" onClick={this.showInfo}>
-          {issue.node.title}
+        <button className="pullRequest-info-button" onClick={this.showInfo}>
+          {pullRequest.node.title}
         </button>
         {this.state.info ? (
-          <div className="issue-card-box">
-            <h3>Issue Author: {issue.node.author.login}</h3>
+          <div className="pullRequest-card-box">
             <h3>
-              Date of Issue:{' '}
-              {issue.node.createdAt
+              Date of pullRequest:{' '}
+              {pullRequest.node.createdAt
                 .slice(0, 10)
                 .split('-')
                 .reverse()
@@ -78,7 +77,7 @@ class IssueCard extends Component {
                   </li>
                 ))
               ) : (
-                <p>There are no comments associated with this issue</p>
+                <p>There are no comments associated with this pullRequest</p>
               )}
             </ul>
           </div>
@@ -90,4 +89,4 @@ class IssueCard extends Component {
   }
 }
 
-export default IssueCard;
+export default PullRequestCard;

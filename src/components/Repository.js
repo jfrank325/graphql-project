@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import IssueCard from '../components/IssueCard';
+import PullRequestCard from './PullRequestCard';
 
 const Repository = ({ repository }) => (
   <div className="repository-box">
@@ -9,7 +10,8 @@ const Repository = ({ repository }) => (
       <h3>Pull Requests</h3>
       {repository.pullRequests.edges.map(pullRequest => (
         <li key={pullRequest.node.id}>
-          <a href={pullRequest.node.url}>{pullRequest.node.title}</a>
+          {/* <a href={pullRequest.node.url}>{pullRequest.node.title}</a> */}
+          <PullRequestCard pullRequest={pullRequest}></PullRequestCard>
         </li>
       ))}
     </ul>

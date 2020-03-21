@@ -49,9 +49,16 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
           node {
             id
             title
-            number
-            mergeable
-            url
+            createdAt
+            comments(last: 5) {
+              edges {
+                node {
+                  bodyText
+                  id
+                  createdAt
+                }
+              }
+            }
           }
         }
       }
@@ -61,7 +68,7 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
 
 class App extends Component {
   state = {
-    path: 'facebook / create-react-app',
+    path: 'facebook/jest',
     organization: null,
   };
 
@@ -79,7 +86,7 @@ class App extends Component {
   };
 
   onFetchFromGitHub = path => {
-    const [organization, repository] = path.split(' / ');
+    const [organization, repository] = path.split('/');
 
     axiosGitHubGraphQL.post('', { query: getIssuesOfRepositoryQuery(organization, repository) }).then(response =>
       this.setState(() => ({
