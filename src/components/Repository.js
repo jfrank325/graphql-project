@@ -22,7 +22,6 @@ const Repository = ({ repository }) => (
       <div className="issues-box">
         <ul>
           <h3>Open Issues</h3>
-          {console.log(repository.issues.edges, 'issue edges look like this')}
           {repository.issues.edges.map(issue =>
             issue.node.state === 'OPEN' ? (
               <li key={issue.node.id}>
@@ -39,7 +38,6 @@ const Repository = ({ repository }) => (
         </ul>
         <ul>
           <h3>Closed Issues</h3>
-          {console.log(repository.issues.edges, 'issue edges look like this')}
           {repository.issues.edges.map(issue =>
             issue.node.state === 'CLOSED' ? (
               <li key={issue.node.id}>

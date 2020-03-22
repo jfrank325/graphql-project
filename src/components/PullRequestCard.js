@@ -7,19 +7,21 @@ class PullRequestCard extends Component {
     comments: this.props.pullRequest.node.comments.edges,
   };
 
+  //toggle the dropdown of pull request information
   showInfo = () => {
     this.setState({
       info: !this.state.info,
     });
   };
 
+  //retrieving user's search input
   handleChange = e => {
     this.setState({
       text: e.target.value.toLowerCase(),
     });
-    console.log('search text', this.state.text);
   };
 
+  //using user's input to filter the comments results
   handleSubmit = e => {
     e.preventDefault();
     console.log('this is the result of the comments search', e.target.value);
@@ -29,7 +31,6 @@ class PullRequestCard extends Component {
     this.setState({
       comments: filteredComments,
     });
-    console.log('comments after setState', filteredComments);
   };
 
   render() {

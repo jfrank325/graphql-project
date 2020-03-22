@@ -1,8 +1,13 @@
+body {
+  background-color: rgb(238, 238, 238);
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: rgb(238, 238, 238);
   height: 100vh;
 }
 

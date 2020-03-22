@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Organization from '../src/components/Organization';
 
+//single graphql query as a variable
 const getIssuesOfRepositoryQuery = (organization, repository) => `
 {
   organization(login: "${organization}") {
@@ -60,31 +61,33 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
 
 class App extends Component {
   state = {
-    path: 'facebook/jest',
-    organization: null,
+    path: 'nuwave/lighthouse',
     token: '',
   };
 
-  componentDidMount() {
-    this.onFetchFromGitHub(this.state.path);
-  }
+  // componentDidMount() {
+  //   this.onFetchFromGitHub(this.state.path);
+  // }
 
+  //retrieving users search information
   onChange = e => {
     this.setState({ path: e.target.value });
   };
 
+  //retrieving github token from user
   tokenChange = e => {
     this.setState({
       token: e.target.value,
     });
-    console.log('The Token', this.state.token);
   };
 
+  //submitting user info
   onSubmit = e => {
     this.onFetchFromGitHub(this.state.path);
     e.preventDefault();
   };
 
+  //submitted user info being used inside graphql query
   onFetchFromGitHub = path => {
     const [organization, repository] = path.split('/');
     const axiosGitHubGraphQL = axios.create({
@@ -107,16 +110,21 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>GitHub Search</h1>
+        <h1 style={{ fontSize: '2.8rem' }}>GitHub Search</h1>
         <form onSubmit={this.onSubmit}>
-          <label htmlFor="token"> Please Give Your Auth Token To Search</label>
-          <input type="text" id="token" value={this.state.token} onChange={this.tokenChange} placeholder="Auth Token" />
-          <label htmlFor="url">Show open issues for https://github.com/</label>
+          <label htmlFor="url"> Show open issues for https://github.com/</label>
           <input type="text" id="url" value={path} onChange={this.onChange} style={{ width: '300px' }} />
+          <br></br>
+          <label htmlFor="token">Auth Token: </label>
+          <input type="text" id="token" value={this.state.token} onChange={this.tokenChange} placeholder="Auth Token" />
           <button type="submit">Search</button>
         </form>
         <hr />
-        {organization ? <Organization organization={organization} /> : <p>No information yet ...</p>}
+        {organization ? (
+          <Organization organization={organization} />
+        ) : (
+          <p>Please make sure your auth token and repo query are accurate</p>
+        )}
       </div>
     );
   }
