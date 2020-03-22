@@ -7,6 +7,7 @@ const Organization = ({ organization }) => {
   return organization ? (
     <div className="organization-container">
       <h1>Organization: {organization.name}</h1>
+      <h1>Repository: {organization.repository.name}</h1>
       <div className="organization-box">
         <Repository repository={organization.repository} />
         {/* <Route path="/issue/:id" component={Issue} /> */}

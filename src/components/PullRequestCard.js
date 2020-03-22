@@ -49,6 +49,7 @@ class PullRequestCard extends Component {
                 .reverse()
                 .join('/')}
             </h3>
+            <h3>Comments</h3>
             <form onSubmit={this.handleSubmit}>
               <input
                 type="text"
@@ -59,7 +60,6 @@ class PullRequestCard extends Component {
               ></input>
               <button type="submit">Search</button>
             </form>
-            <h3>Comments</h3>
             <ul>
               {this.state.comments.length > 0 ? (
                 this.state.comments.map(comment => (
@@ -80,6 +80,9 @@ class PullRequestCard extends Component {
                 <p>There are no comments associated with this pullRequest</p>
               )}
             </ul>
+            <a href={pullRequest.node.url}>
+              <h3>Click here to go to Pull Request on GitHub</h3>
+            </a>
           </div>
         ) : (
           ''

@@ -50,6 +50,7 @@ class IssueCard extends Component {
                 .reverse()
                 .join('/')}
             </h3>
+            <h3>Comments</h3>
             <form onSubmit={this.handleSubmit}>
               <input
                 type="text"
@@ -60,7 +61,6 @@ class IssueCard extends Component {
               ></input>
               <button type="submit">Search</button>
             </form>
-            <h3>Comments</h3>
             <ul>
               {this.state.comments.length > 0 ? (
                 this.state.comments.map(comment => (
@@ -81,6 +81,9 @@ class IssueCard extends Component {
                 <p>There are no comments associated with this issue</p>
               )}
             </ul>
+            <a href={issue.node.url}>
+              <h3>Click here to go to Pull Request on GitHub</h3>
+            </a>
           </div>
         ) : (
           ''

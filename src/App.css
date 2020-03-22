@@ -3,6 +3,7 @@
   flex-direction: column;
   text-align: center;
   background-color: rgb(238, 238, 238);
+  height: 100vh;
 }
 
 /* .organization-container {
@@ -16,15 +17,31 @@
 @media (max-width: 1000px) {
   .repository-box {
     text-align: center;
-    display: flex;
-    flex-direction: column;
     align-items: center;
   }
 }
 
 .repository-box {
-  margin-left: 30px;
+  margin: 30px;
   text-align: start;
+}
+
+@media (max-width: 900px) {
+  .pulls-issues-box {
+    flex-direction: column;
+  }
+}
+
+.pulls-issues-box {
+  display: flex;
+}
+
+.pull-requests-box {
+  max-width: 50vw;
+}
+
+.issues-box {
+  max-width: 50vw;
 }
 
 ul {

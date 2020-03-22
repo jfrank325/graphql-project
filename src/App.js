@@ -3,16 +3,6 @@ import './App.css';
 import axios from 'axios';
 import Organization from '../src/components/Organization';
 
-const axiosGitHubGraphQL = axios.create({
-  baseURL: 'https://api.github.com/graphql',
-  headers: {
-    Authorization: `bearer  ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN} 
-`,
-  },
-});
-
-const TITLE = 'Github Searcher';
-
 const getIssuesOfRepositoryQuery = (organization, repository) => `
 {
   organization(login: "${organization}") {
@@ -27,6 +17,7 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
             state
             id 
             title
+            url
             createdAt
             author {
               login
@@ -49,6 +40,7 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
           node {
             id
             title
+            url
             createdAt
             comments(last: 5) {
               edges {
@@ -70,6 +62,7 @@ class App extends Component {
   state = {
     path: 'facebook/jest',
     organization: null,
+    token: '',
   };
 
   componentDidMount() {
@@ -80,6 +73,13 @@ class App extends Component {
     this.setState({ path: e.target.value });
   };
 
+  tokenChange = e => {
+    this.setState({
+      token: e.target.value,
+    });
+    console.log('The Token', this.state.token);
+  };
+
   onSubmit = e => {
     this.onFetchFromGitHub(this.state.path);
     e.preventDefault();
@@ -87,7 +87,14 @@ class App extends Component {
 
   onFetchFromGitHub = path => {
     const [organization, repository] = path.split('/');
-
+    const axiosGitHubGraphQL = axios.create({
+      baseURL: 'https://api.github.com/graphql',
+      headers: {
+        Authorization: `bearer  ${this.state.token} 
+        `,
+      },
+    });
+    // process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
     axiosGitHubGraphQL.post('', { query: getIssuesOfRepositoryQuery(organization, repository) }).then(response =>
       this.setState(() => ({
         organization: response.data.data.organization,
@@ -100,8 +107,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>{TITLE}</h1>
+        <h1>GitHub Search</h1>
         <form onSubmit={this.onSubmit}>
+          <label htmlFor="token"> Please Give Your Auth Token To Search</label>
+          <input type="text" id="token" value={this.state.token} onChange={this.tokenChange} placeholder="Auth Token" />
           <label htmlFor="url">Show open issues for https://github.com/</label>
           <input type="text" id="url" value={path} onChange={this.onChange} style={{ width: '300px' }} />
           <button type="submit">Search</button>
