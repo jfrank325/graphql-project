@@ -17,13 +17,7 @@ body {
 
 .organization-box {
   display: flex;
-}
-
-@media (max-width: 1000px) {
-  .repository-box {
-    text-align: center;
-    align-items: center;
-  }
+  justify-content: center;
 }
 
 .repository-box {
@@ -31,10 +25,12 @@ body {
   text-align: start;
 }
 
-@media (max-width: 900px) {
-  .pulls-issues-box {
-    flex-direction: column;
-  }
+button {
+  background-color: rgb(0, 46, 199);
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  font-size: 1.2rem;
 }
 
 .pulls-issues-box {
@@ -53,14 +49,6 @@ ul {
   list-style-type: none;
 }
 
-button {
-  background-color: rgb(0, 46, 199);
-  color: white;
-  border-radius: 6px;
-  margin-bottom: 5px;
-  font-size: 1.2rem;
-}
-
 .red {
   background-color: rgb(187, 68, 25);
 }
@@ -72,4 +60,20 @@ button {
 input {
   margin-bottom: 5px;
   font-size: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  body {
+    font-size: 75%;
+  }
+  button {
+    font-size: 0.8rem;
+  }
+  .repository-box {
+    text-align: center;
+    align-items: center;
+  }
+  .pulls-issues-box {
+    flex-direction: column;
+  }
 }
