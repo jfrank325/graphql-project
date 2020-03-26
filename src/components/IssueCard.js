@@ -1,97 +1,191 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 
-class IssueCard extends Component {
-  state = {
+// class IssueCard extends Component {
+//   state = {
+//     info: false,
+//     text: '',
+//     comments: this.props.issue.node.comments.edges,
+//   };
+
+//toggle the dropdown of issue information
+// showInfo = () => {
+//   this.setState({
+//     info: !this.state.info,
+//   });
+// };
+
+//retrieving user's search input
+// handleChange = e => {
+//   this.setState({
+//     text: e.target.value.toLowerCase(),
+//   });
+// };
+
+//using user's input to filter the comments results
+//   handleSubmit = e => {
+//     e.preventDefault();
+//     let filteredComments = this.state.comments.filter(comment =>
+//       comment.node.bodyText.toLowerCase().includes(this.state.text)
+//     );
+//     this.setState({
+//       comments: filteredComments,
+//     });
+//   };
+
+//   render() {
+//     const { issue } = this.props;
+//     return (
+//       <div className="issue-box">
+//         <button className="red" onClick={this.showInfo}>
+//           {issue.node.title}
+//         </button>
+//         {this.state.info ? (
+//           <div className="issue-card-box">
+//             <h3>Issue Author: {issue.node.author.login}</h3>
+//             <h3>
+//               Date of Issue:{' '}
+//               {issue.node.createdAt
+//                 .slice(0, 10)
+//                 .split('-')
+//                 .reverse()
+//                 .join('/')}
+//             </h3>
+//             <h3>Comments</h3>
+//             <form onSubmit={this.handleSubmit}>
+//               <input
+//                 type="text"
+//                 name="search"
+//                 value={this.state.text}
+//                 onChange={this.handleChange}
+//                 placeholder="Search Comments"
+//               ></input>
+//               <button type="submit">Search</button>
+//             </form>
+//             <ul>
+//               {this.state.comments.length > 0 ? (
+//                 this.state.comments.map(comment => (
+//                   <li key={comment.node.id}>
+//                     <h4>
+//                       Created on:{' '}
+//                       {comment.node.createdAt
+//                         .slice(0, 10)
+//                         .split('-')
+//                         .reverse()
+//                         .join('/')}{' '}
+//                       at: {comment.node.createdAt.slice(-9, -1)}
+//                     </h4>
+//                     - {comment.node.bodyText}
+//                   </li>
+//                 ))
+//               ) : (
+//                 <p>There are no comments associated with this issue</p>
+//               )}
+//             </ul>
+//             <a href={issue.node.url}>
+//               <h3>Click here to go to Pull Request on GitHub</h3>
+//             </a>
+//           </div>
+//         ) : (
+//           ''
+//         )}
+//       </div>
+//     );
+//   }
+// }
+
+// export default IssueCard;
+
+import React, { useState } from 'react';
+
+const IssueCard = props => {
+  const [state, setState] = useState({
     info: false,
     text: '',
-    comments: this.props.issue.node.comments.edges,
-  };
+    comments: props.issue.node.comments.edges,
+  });
 
   //toggle the dropdown of issue information
-  showInfo = () => {
-    this.setState({
-      info: !this.state.info,
-    });
+  const showInfo = () => {
+    setState({ ...state, info: !state.info });
   };
 
   //retrieving user's search input
-  handleChange = e => {
-    this.setState({
-      text: e.target.value.toLowerCase(),
-    });
+  const handleChange = e => {
+    setState({ ...state, text: e.target.value.toLowerCase() });
   };
 
   //using user's input to filter the comments results
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    console.log('this is the result of the comments search', e.target.value);
-    let filteredComments = this.state.comments.filter(comment =>
-      comment.node.bodyText.toLowerCase().includes(this.state.text)
-    );
-    this.setState({
-      comments: filteredComments,
-    });
+    let filteredComments = state.comments.filter(comment => comment.node.bodyText.toLowerCase().includes(state.text));
+    setState({ ...state, comments: filteredComments });
   };
 
-  render() {
-    const { issue } = this.props;
-    return (
-      <div className="issue-box">
-        <button className="red" onClick={this.showInfo}>
-          {issue.node.title}
-        </button>
-        {this.state.info ? (
-          <div className="issue-card-box">
-            <h3>Issue Author: {issue.node.author.login}</h3>
-            <h3>
-              Date of Issue:{' '}
-              {issue.node.createdAt
-                .slice(0, 10)
-                .split('-')
-                .reverse()
-                .join('/')}
-            </h3>
-            <h3>Comments</h3>
-            <form onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                name="search"
-                value={this.state.text}
-                onChange={this.handleChange}
-                placeholder="Search Comments"
-              ></input>
-              <button type="submit">Search</button>
-            </form>
-            <ul>
-              {this.state.comments.length > 0 ? (
-                this.state.comments.map(comment => (
-                  <li key={comment.node.id}>
-                    <h4>
-                      Created on:{' '}
-                      {comment.node.createdAt
-                        .slice(0, 10)
-                        .split('-')
-                        .reverse()
-                        .join('/')}{' '}
-                      at: {comment.node.createdAt.slice(-9, -1)}
-                    </h4>
-                    - {comment.node.bodyText}
-                  </li>
-                ))
-              ) : (
-                <p>There are no comments associated with this issue</p>
-              )}
-            </ul>
-            <a href={issue.node.url}>
-              <h3>Click here to go to Pull Request on GitHub</h3>
-            </a>
-          </div>
-        ) : (
-          ''
-        )}
-      </div>
-    );
-  }
-}
+  const { issue } = props;
+
+  return (
+    <div className="issue-box">
+      <button className="red" onClick={showInfo}>
+        {issue.node.title}
+      </button>
+      {state.info ? (
+        <div className="issue-card-box">
+          <h3>Issue Author: {issue.node.author.login}</h3>
+          <h3>
+            Date of Issue:{' '}
+            {issue.node.createdAt
+              .slice(0, 10)
+              .split('-')
+              .reverse()
+              .join('/')}
+          </h3>
+          <h3>Comments</h3>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="search"
+              value={state.text}
+              onChange={handleChange}
+              placeholder="Search Comments"
+            ></input>
+            <button type="submit">Search</button>
+          </form>
+          <ul>
+            {state.comments.length > 0 ? (
+              state.comments.map(comment => (
+                <li key={comment.node.id}>
+                  <h4>
+                    Created on:{' '}
+                    {comment.node.createdAt
+                      .slice(0, 10)
+                      .split('-')
+                      .reverse()
+                      .join('/')}{' '}
+                    at: {comment.node.createdAt.slice(-9, -1)}
+                  </h4>
+                  - {comment.node.bodyText}
+                </li>
+              ))
+            ) : (
+              <p>There are no comments associated with this issue</p>
+            )}
+          </ul>
+          <a href={issue.node.url}>
+            <h3>Click here to go to Pull Request on GitHub</h3>
+          </a>
+        </div>
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
+
+// class IssueCard extends Component {
+//   state = {
+// info: false,
+// text: '',
+// comments: this.props.issue.node.comments.edges,
+//   };
 
 export default IssueCard;
