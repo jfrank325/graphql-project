@@ -12,26 +12,26 @@ const App = () => {
 
   useEffect(() => {
     onFetchFromGitHub(state.path);
-  }, []);
+  }, [state.path]);
 
   //retrieving users search information
-  const onChange = e => {
+  const onChange = (e) => {
     setState({ ...state, path: e.target.value });
   };
 
   //retrieving github token from user
-  const tokenChange = e => {
+  const tokenChange = (e) => {
     setState({ ...state, token: e.target.value });
   };
 
   //submitting user info
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     onFetchFromGitHub(state.path);
     e.preventDefault();
   };
 
   //submitted user info being used inside graphql query
-  const onFetchFromGitHub = path => {
+  const onFetchFromGitHub = (path) => {
     const [organization, repository] = path.split('/');
     const axiosGitHubGraphQL = axios.create({
       baseURL: 'https://api.github.com/graphql',
@@ -43,17 +43,17 @@ const App = () => {
     // process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
     axiosGitHubGraphQL
       .post('', { query: getIssuesOfRepositoryQuery(organization, repository) })
-      .then(response => setState(() => ({ ...state, organization: response.data.data.organization })));
+      .then((response) => setState(() => ({ ...state, organization: response.data.data.organization })));
   };
 
   const { path, organization } = state;
 
   return (
     <div className="App">
-      <h1 style={{ fontSize: '2.8rem' }}>GitHub Search</h1>
+      <h1>GitHub Search</h1>
       <form onSubmit={onSubmit}>
         <label htmlFor="url"> Show open issues for https://github.com/</label>
-        <input type="text" id="url" value={path} onChange={onChange} style={{ width: '300px' }} />
+        <input type="text" id="url" value={path} onChange={onChange} style={{ width: '20rem' }} />
         <br></br>
         <label htmlFor="token">Auth Token: </label>
         <input type="text" id="token" value={state.token} onChange={tokenChange} placeholder="Auth Token" />

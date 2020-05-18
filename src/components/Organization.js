@@ -6,8 +6,8 @@ import Repository from '../components/Repository';
 const Organization = ({ organization }) => {
   return organization ? (
     <div className="organization-container">
-      <h1>Organization: {organization.name}</h1>
-      <h1>Repository: {organization.repository.name}</h1>
+      <h2>Organization: {organization.name}</h2>
+      <h2>Repository: {organization.repository.name}</h2>
       <div className="organization-box">
         <Repository repository={organization.repository} />
         {/* <Route path="/issue/:id" component={Issue} /> */}
